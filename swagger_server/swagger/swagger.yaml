@@ -1,0 +1,174 @@
+openapi: 3.0.1
+info:
+  title: SELLERS-MS
+  description: API para gestionar vendedores.
+  version: 1.0.0
+servers:
+- url: http://localhost:8081
+  description: Servidor local
+paths:
+  /sellers:
+    get:
+      summary: Obtener todos los vendedores
+      operationId: sellers_get
+      responses:
+        "200":
+          description: Lista de vendedores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Seller'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.sellers_controller
+    post:
+      summary: Crear un nuevo vendedor
+      operationId: sellers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SellerRequest'
+        required: true
+      responses:
+        "201":
+          description: Vendedor creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Seller'
+        "400":
+          description: Error en los datos proporcionados
+      x-openapi-router-controller: swagger_server.controllers.sellers_controller
+  /sellers/{id}:
+    get:
+      summary: Obtener un vendedor por ID
+      operationId: sellers_id_get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Detalles del vendedor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Seller'
+        "404":
+          description: Vendedor no encontrado
+      x-openapi-router-controller: swagger_server.controllers.sellers_controller
+    delete:
+      summary: Eliminar un vendedor
+      operationId: sellers_id_delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "204":
+          description: Vendedor eliminado exitosamente
+        "404":
+          description: Vendedor no encontrado
+      x-openapi-router-controller: swagger_server.controllers.sellers_controller
+    patch:
+      summary: Actualizar parcialmente un vendedor
+      operationId: sellers_id_patch
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SellerUpdate'
+        required: true
+      responses:
+        "200":
+          description: Vendedor actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Seller'
+        "400":
+          description: Datos inválidos
+        "404":
+          description: Vendedor no encontrado
+      x-openapi-router-controller: swagger_server.controllers.sellers_controller
+components:
+  schemas:
+    Seller:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombres:
+          type: string
+        apellidos:
+          type: string
+        correo:
+          type: string
+        celular:
+          type: string
+        estado:
+          type: integer
+      example:
+        id: 1
+        nombres: Juan
+        apellidos: Pérez
+        correo: juan.perez@example.com
+        celular: "0999999999"
+        estado: 1
+    SellerRequest:
+      type: object
+      properties:
+        nombres:
+          type: string
+        apellidos:
+          type: string
+        correo:
+          type: string
+        celular:
+          type: string
+        estado:
+          type: integer
+      example:
+        nombres: María
+        apellidos: Gómez
+        correo: maria.gomez@example.com
+        celular: "0988888888"
+        estado: 1
+    SellerUpdate:
+      type: object
+      properties:
+        nombres:
+          type: string
+        apellidos:
+          type: string
+        correo:
+          type: string
+        celular:
+          type: string
+        estado:
+          type: integer
+      example:
+        nombres: Luis
+        apellidos: Martínez
+        correo: luis.martinez@example.com
+        celular: "0977777777"
+        estado: 1
+
