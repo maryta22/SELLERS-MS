@@ -48,7 +48,7 @@ def sellers_id_get(id):  # noqa: E501
     return 'do some magic!'
 
 
-def sellers_id_patch(body, id):  # noqa: E501
+def sellers_id_patch(body, id_):  # noqa: E501
     """Actualizar parcialmente un vendedor
 
      # noqa: E501
@@ -62,7 +62,7 @@ def sellers_id_patch(body, id):  # noqa: E501
     """
     if request.is_json:
         body = SellerUpdate.from_dict(request.get_json())  # noqa: E501
-        return seller_repository.update_seller(id, body)
+        return seller_repository.update_seller(id_, body)
 
 
 def sellers_post(body):  # noqa: E501
