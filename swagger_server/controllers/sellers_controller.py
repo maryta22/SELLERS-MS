@@ -1,6 +1,6 @@
-import connexion
-import six
-from flask import request
+import logging
+from flask import request, jsonify
+from flask_cors import cross_origin
 
 from swagger_server.models.seller import Seller  # noqa: E501
 from swagger_server.models.seller_request import SellerRequest  # noqa: E501
@@ -62,7 +62,7 @@ def sellers_id_patch(body, id):  # noqa: E501
     """
     if request.is_json:
         body = SellerUpdate.from_dict(request.get_json())  # noqa: E501
-    return 'do some magic!'
+        return seller_repository.update_seller(id, body)
 
 
 def sellers_post(body):  # noqa: E501
@@ -77,4 +77,12 @@ def sellers_post(body):  # noqa: E501
     """
     if request.is_json:
         body = SellerRequest.from_dict(request.get_json())  # noqa: E501
-    return 'do some magic!'
+        
+        # Validaciones
+        if not body.correo or not body.nombres or not body.apellidos:
+            return jsonify({"message": "Email, first name, and last name are required."}), 400
+        
+        # Asegurar que el estado siempre sea 1
+        body.estado = 1
+        
+        return seller_repository.create_seller(body)
