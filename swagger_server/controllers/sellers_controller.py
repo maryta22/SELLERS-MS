@@ -7,6 +7,9 @@ from swagger_server.models.seller_request import SellerRequest  # noqa: E501
 from swagger_server.models.seller_update import SellerUpdate  # noqa: E501
 from swagger_server import util
 
+from swagger_server.repositories.seller_repository import SellerRepository
+
+seller_repository = SellerRepository()
 
 def sellers_get():  # noqa: E501
     """Obtener todos los vendedores
@@ -16,7 +19,7 @@ def sellers_get():  # noqa: E501
 
     :rtype: List[Seller]
     """
-    return 'do some magic!'
+    return seller_repository.get_all_sellers()
 
 
 def sellers_id_delete(id):  # noqa: E501
