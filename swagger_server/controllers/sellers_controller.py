@@ -12,14 +12,19 @@ from swagger_server.repositories.seller_repository import SellerRepository
 seller_repository = SellerRepository()
 
 def sellers_get():  # noqa: E501
-    """Obtener todos los vendedores
+    """Obtener todos los vendedores o filtrar por programa
 
      # noqa: E501
 
 
     :rtype: List[Seller]
     """
-    return seller_repository.get_all_sellers()
+    program_id = request.args.get('program_id', type=int)
+    if  program_id:
+        sellers = seller_repository.get_sellers(program_id)
+    else:
+        sellers = seller_repository.get_all_sellers()
+    return jsonify(sellers)
 
 
 def sellers_id_delete(id):  # noqa: E501
