@@ -9,6 +9,8 @@ servers:
 paths:
   /sellers:
     get:
+      tags:
+        - sellers
       summary: Obtener todos los vendedores
       operationId: sellers_get
       responses:
@@ -24,6 +26,8 @@ paths:
           description: Error interno del servidor
       x-openapi-router-controller: swagger_server.controllers.sellers_controller
     post:
+      tags:
+        - sellers
       summary: Crear un nuevo vendedor
       operationId: sellers_post
       requestBody:
@@ -46,6 +50,8 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.sellers_controller
   /sellers/{id}:
     get:
+      tags:
+        - sellers
       summary: Obtener un vendedor por ID
       operationId: sellers_id_get
       parameters:
@@ -67,6 +73,8 @@ paths:
           description: Vendedor no encontrado
       x-openapi-router-controller: swagger_server.controllers.sellers_controller
     delete:
+      tags:
+        - sellers
       summary: Eliminar un vendedor
       operationId: sellers_id_delete
       parameters:
@@ -84,6 +92,8 @@ paths:
           description: Vendedor no encontrado
       x-openapi-router-controller: swagger_server.controllers.sellers_controller
     patch:
+      tags:
+        - sellers
       summary: Actualizar parcialmente un vendedor
       operationId: sellers_id_patch
       parameters:

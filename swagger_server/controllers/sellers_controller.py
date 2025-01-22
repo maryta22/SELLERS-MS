@@ -35,7 +35,7 @@ def sellers_id_delete(id):  # noqa: E501
     return 'do some magic!'
 
 
-def sellers_id_get(id):  # noqa: E501
+def sellers_id_get(id_):  # noqa: E501
     """Obtener un vendedor por ID
 
      # noqa: E501
@@ -45,7 +45,14 @@ def sellers_id_get(id):  # noqa: E501
 
     :rtype: Seller
     """
-    return 'do some magic!'
+    try:
+        seller = seller_repository.get_seller_by_id(id_)
+        if not seller:
+            return jsonify({"message": "Vendedor no encontrado"}), 404
+        return jsonify(seller.to_dict())
+    except Exception as e:
+        logging.error(f"Error al obtener el vendedor por ID {id_}: {e}")
+        return jsonify({"message": "Error interno del servidor"}), 500
 
 
 def sellers_id_patch(body, id_):  # noqa: E501

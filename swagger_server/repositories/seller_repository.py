@@ -82,3 +82,16 @@ class SellerRepository:
             return {"message": f"Error updating seller: {str(e)}"}, 500
         finally:
             session.close()
+
+    def get_seller_by_id(self, seller_id):
+        session = self.Session()
+        try:
+            seller = session.query(Seller).options(joinedload(Seller.user)).filter(Seller.id == seller_id).one_or_none()
+            if not seller:
+                return None
+            return seller
+        except Exception as e:
+            logging.error(f"Error retrieving seller by ID {seller_id}: {e}")
+            return None
+        finally:
+            session.close()
