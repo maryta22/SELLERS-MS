@@ -1,4 +1,4 @@
-from swagger_server.database_models.models import Seller, User
+from swagger_server.database_models.models import Seller, User, ProgramSellers, AcademicProgram
 
 import logging
 from datetime import datetime
@@ -19,6 +19,17 @@ class SellerRepository:
         session = self.Session()
         try:
             sellers = session.query(Seller).join(User).all()
+            return [seller.to_dict() for seller in sellers], 200
+        except Exception as e:
+            logging.error(f"Error retrieving sellers: {e}")
+            return {"message": f"Error retrieving sellers: {str(e)}"}, 500
+        finally:
+            session.close()
+
+    def get_sellers(self, program_id):
+        session = self.Session()
+        try:
+            sellers = session.query(Seller).join(ProgramSellers).filter(ProgramSellers.id_academic_program == program_id).all()
             return [seller.to_dict() for seller in sellers], 200
         except Exception as e:
             logging.error(f"Error retrieving sellers: {e}")
