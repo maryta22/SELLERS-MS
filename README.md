@@ -42,8 +42,8 @@ To run the server on a Docker container, please execute the following from the r
 
 ```bash
 # building the image
-docker build --no-cache -t sellers-ms .
+docker build --no-cache -t sellers .
 
 # starting up a container
-docker run -p 3030:3030 sellers-ms
+docker run -p 3030:3030 sellers
 ```
