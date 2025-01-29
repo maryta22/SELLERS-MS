@@ -11,7 +11,7 @@ def main():
     app.app.json_encoder = encoder.JSONEncoder
     CORS(app.app, resources={r"/sellers*": {"origins": "*"}}, supports_credentials=True)
     app.add_api('swagger.yaml', arguments={'title': 'SELLERS-MS'}, pythonic_params=True)
-    app.run(port=3030)
+    app.run(host='0.0.0.0', port=3030)
 
 
 if __name__ == '__main__':
